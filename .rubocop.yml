@@ -1,0 +1,40 @@
+require: rubocop-rails
+
+AllCops:
+  NewCops: enable
+
+Rails:
+  Enabled: true
+
+Rails/RedundantPresenceValidationOnBelongsTo:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/RedundantFetchBlock:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/GlobalStdStream:
+  Enabled: false
+
+Style/BlockComments:
+  Enabled: false
+
+Layout/SpaceInsidePercentLiteralDelimiters:
+  Enabled: false
+
+Layout/SpaceInsideArrayLiteralBrackets:
+  Enabled: false
