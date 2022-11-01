@@ -5,4 +5,5 @@ h1 Создание ответа на вопрос "#{question.title}"
     = f.label :body, 'Текст ответа', class: 'form-label'
     = f.text_area :body, id: :answer_body, rows: 10, class: 'form-control'
 
-  = f.submit 'Сохранить', class: 'btn btn-primary'
+  = f.submit 'Сохранить', class: 'btn btn-primary me-2'
+  = link_to 'Отмена', question_path(question), class: 'btn btn-outline-secondary'
