@@ -1,0 +1,9 @@
+h1 Просмотр вопроса
+
+div.mb-3
+  div.fw-bold Название
+  = question.title
+
+div.mb-3
+  div.fw-bold Содержание
+  = question.body.html_safe
