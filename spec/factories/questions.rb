@@ -6,5 +6,11 @@ FactoryBot.define do
     trait :invalid do
       title { nil }
     end
+
+    trait :different_titles do
+      sequence :title do |n|
+        "MyString#{n}"
+      end
+    end
   end
 end
