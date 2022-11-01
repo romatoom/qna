@@ -1,10 +1,9 @@
 class AnswersController < ApplicationController
   def new
-    @answer = Answer.new
   end
 
   def create
-    @answer = Answer.new(answer_params)
+    @answer = question.answers.new(answer_params)
 
     if @answer.save
       redirect_to question_answer_path(@answer.question, @answer)
@@ -19,6 +18,18 @@ class AnswersController < ApplicationController
   private
 
   def answer_params
-    params.require(:answer).permit(:question_id, :body)
+    params.require(:answer).permit(:body)
   end
+
+  def question
+    @question ||= Question.find(params[:question_id])
+  end
+
+  helper_method :question
+
+  def answer
+    @answer ||= params[:id] ? Answer.find(params[:id]) : question.answers.new
+  end
+
+  helper_method :answer
 end
