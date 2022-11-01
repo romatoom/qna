@@ -1,0 +1,8 @@
+h1 Создание ответа на вопрос "#{question.title}"
+
+= form_with model: [question, answer], local: true do |f|
+  div.mb-5
+    = f.label :body, 'Текст ответа', class: 'form-label'
+    = f.text_area :body, id: :answer_body, rows: 10, class: 'form-control'
+
+  = f.submit 'Сохранить', class: 'btn btn-primary'
