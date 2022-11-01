@@ -1,5 +1,7 @@
 h1 Просмотр ответа на вопрос "#{question.title}"
 
-div.mb-3
+div.mb-5
   div.fw-bold Текст ответа
   = answer.body.html_safe
+
+= link_to 'Назад к вопросу', question_path(question), class: 'btn btn-primary'
