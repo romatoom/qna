@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
-  root 'questions#index'
+  root to: 'questions#index'
 
-  resources :questions, only: %i(new create show index) do
-    resources :answers, only: %i(new create show)
+  devise_for :users
+
+  resources :questions, only: %i[new create show index] do
+    resources :answers, only: %i[new create show]
   end
 end
