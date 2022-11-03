@@ -1,6 +1,11 @@
 class QuestionsController < ApplicationController
-  def new
+  def index
+    @questions = Question.all
   end
+
+  def show; end
+
+  def new; end
 
   def create
     @question = Question.new(question_params)
@@ -10,13 +15,6 @@ class QuestionsController < ApplicationController
     else
       render :new
     end
-  end
-
-  def show
-  end
-
-  def index
-    @questions = Question.all
   end
 
   private

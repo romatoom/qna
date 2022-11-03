@@ -1,6 +1,7 @@
 class AnswersController < ApplicationController
-  def new
-  end
+  def show; end
+
+  def new; end
 
   def create
     @answer = question.answers.new(answer_params)
@@ -10,9 +11,6 @@ class AnswersController < ApplicationController
     else
       render :new
     end
-  end
-
-  def show
   end
 
   private

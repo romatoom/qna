@@ -29,7 +29,12 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'with invalid attributes' do
       let(:create_with_invalid_attributes) do
-        -> { post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid, question_id: question) } }
+        lambda do
+          post :create, params: {
+            question_id: question,
+            answer: attributes_for(:answer, :invalid, question_id: question)
+          }
+        end
       end
 
       it 'does not save the question' do
@@ -44,7 +49,7 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'GET #show' do
-    let(:answer) { create(:answer, question: question) }
+    let(:answer) { create(:answer, question:) }
 
     before { get :show, params: { question_id: question, id: answer } }
 

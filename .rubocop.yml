@@ -33,8 +33,23 @@ Style/GlobalStdStream:
 Style/BlockComments:
   Enabled: false
 
+Style/RedundantPercentQ:
+  Enabled: false
+
+Style/SymbolProc:
+  Enabled: false
+
 Layout/SpaceInsidePercentLiteralDelimiters:
   Enabled: false
 
 Layout/SpaceInsideArrayLiteralBrackets:
   Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Rails/BulkChangeTable:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 160
