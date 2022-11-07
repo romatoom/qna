@@ -11,8 +11,8 @@ feature 'The user can view the list of questions', %q(
 
     visit questions_path
 
-    expect(page).to have_content 'MyString1'
-    expect(page).to have_content 'MyString2'
-    expect(page).to have_content 'MyString3'
+    Question.all.each do |question|
+      expect(page).to have_content question.title
+    end
   end
 end
