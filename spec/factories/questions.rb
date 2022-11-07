@@ -3,9 +3,13 @@ FactoryBot.define do
     "MyString#{n}"
   end
 
+  sequence :body do |n|
+    "MyText#{n}"
+  end
+
   factory :question do
     title
-    body { "MyText" }
+    body
 
     trait :invalid do
       title { nil }
