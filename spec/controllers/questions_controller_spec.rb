@@ -58,7 +58,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #index' do
-    let(:questions) { create_list(:question, 3, :different_titles) }
+    let(:questions) { create_list(:question, 3) }
 
     before { get :index }
 
