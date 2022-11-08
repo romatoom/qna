@@ -14,7 +14,7 @@ feature 'User can write an answer', %q(
 
     visit question_path(question)
 
-    fill_in 'Answer text', with: 'Text text text'
+    fill_in 'You can answer the question here', with: 'Text text text'
     click_on 'Answer'
 
     expect(page).to have_content 'Text text text'
@@ -23,7 +23,7 @@ feature 'User can write an answer', %q(
   scenario "Unauthenticate user can't write an answer" do
     visit question_path(question)
 
-    fill_in 'Answer text', with: 'Text text text'
+    fill_in 'You can answer the question here', with: 'Text text text'
     click_on 'Answer'
 
     expect(page).to have_content 'You need to sign in or sign up before continuing.'

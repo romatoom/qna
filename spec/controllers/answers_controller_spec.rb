@@ -5,32 +5,36 @@ RSpec.describe AnswersController, type: :controller do
 
   let(:user) { create(:user) }
 
+  let(:answer) { create(:answer, question: question, author: user) }
+
+=begin
   describe 'GET #new' do
     context 'with authenticated user' do
       before { login(user) }
 
-      before { get :new, params: { question_id: question } }
+      before { get :new, params: { question_id: question, author_id: user } }
 
       it 'renders new view' do
-        expect(response).to render_template :new
+        expect(response).to redirect_to question_path(question)
       end
     end
 
     context 'with unauthenticated user' do
-      before { get :new, params: { question_id: question } }
+      before { get :new, params: { question_id: question, author_id: user } }
 
       it 'redirect to sign in page' do
         expect(response).to redirect_to new_user_session_path
       end
     end
   end
+=end
 
   describe 'POST #create' do
     let(:create_with_valid_attributes) do
       lambda do
         post :create, params: {
           question_id: question,
-          answer: attributes_for(:answer, question_id: question) }
+          answer: attributes_for(:answer, question_id: question, author_id: user) }
         end
     end
 
@@ -38,7 +42,7 @@ RSpec.describe AnswersController, type: :controller do
       lambda do
         post :create, params: {
           question_id: question,
-          answer: attributes_for(:answer, :invalid, question_id: question)
+          answer: attributes_for(:answer, :invalid, question_id: question, author_id: user)
         }
       end
     end
@@ -51,9 +55,9 @@ RSpec.describe AnswersController, type: :controller do
           expect { create_with_valid_attributes.call }.to change(Answer, :count).by(1)
         end
 
-        it 'redirects to show view' do
+        it 'redirects to question page' do
           create_with_valid_attributes.call
-          expect(response).to redirect_to question_answer_path(assigns(:answer).question, assigns(:answer))
+          expect(response).to redirect_to question_path(question)
         end
       end
 
@@ -64,7 +68,7 @@ RSpec.describe AnswersController, type: :controller do
 
         it 're-renders new view' do
           create_with_invalid_attributes.call
-          expect(response).to render_template :new
+          expect(response).to redirect_to question_path(question)
         end
       end
     end
@@ -79,12 +83,36 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'GET #show' do
-    let(:answer) { create(:answer, question:) }
-
     before { get :show, params: { question_id: question, id: answer } }
 
     it 'renders show view' do
       expect(response).to render_template :show
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    before { create_list(:answer, 3, question: question, author: user) }
+    let!(:answer) { create(:answer, question: question, author: user) }
+
+    let(:delete_answer) do
+      lambda { delete :destroy, params: { question_id: question.id, id: answer.id } }
+    end
+
+    context 'with authenticated user' do
+      before { login(user) }
+
+      it 'number of responses decreased by 1' do
+        expect { delete_answer.call }.to change(Answer, :count).by(-1)
+      end
+
+      it 'redirect to question show' do
+        delete_answer.call
+        expect(response).to redirect_to question_path(question)
+      end
+    end
+
+    it 'with unauthenticated user' do
+      expect { delete_answer.call }.to_not change(Answer, :count)
     end
   end
 end

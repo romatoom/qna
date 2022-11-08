@@ -6,9 +6,9 @@ feature 'The user can view the list of questions', %q(
   I would like to be able to view the list of questions
 ) do
 
-  scenario 'Any user can view the list of questions' do
-    create_list(:question, 3)
+  background { create_list(:question, 3) }
 
+  scenario 'Any user can view the list of questions' do
     visit questions_path
 
     Question.all.each do |question|
