@@ -12,7 +12,7 @@ feature 'User can write an answer', %q(
   scenario 'Authenticate user can write an answer' do
     sign_in(user)
 
-    visit question_path(question)
+    visit new_question_answer_path(question)
 
     fill_in 'You can answer the question here', with: 'Text text text'
     click_on 'Answer'
@@ -21,7 +21,7 @@ feature 'User can write an answer', %q(
   end
 
   scenario "Unauthenticate user can't write an answer" do
-    visit question_path(question)
+    visit new_question_answer_path(question)
 
     fill_in 'You can answer the question here', with: 'Text text text'
     click_on 'Answer'

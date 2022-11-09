@@ -7,13 +7,12 @@ feature 'The user can view the question and the answers to it', %q(
 ) do
 
   given(:user) { create(:user) }
-
   given(:question) { create(:question) }
 
   before { create_list(:answer, 3, question: question, author: user) }
 
   scenario 'View the question and its answers' do
-    visit question_path(question)
+    visit new_question_answer_path(question)
 
     expect(page).to have_content question.title
 
