@@ -7,7 +7,7 @@ feature 'The user can view the question and the answers to it', %q(
 ) do
 
   given(:user) { create(:user) }
-  given(:question) { create(:question) }
+  given(:question) { create(:question, author: user) }
 
   before { create_list(:answer, 3, question: question, author: user) }
 

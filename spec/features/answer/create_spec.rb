@@ -7,7 +7,7 @@ feature 'User can write an answer', %q(
 ) do
 
   given(:user) { create(:user) }
-  given(:question) { create(:question) }
+  given(:question) { create(:question, author: user) }
 
   scenario 'Authenticate user can write an answer' do
     sign_in(user)

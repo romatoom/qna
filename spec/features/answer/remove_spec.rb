@@ -8,7 +8,7 @@ feature 'The author can delete his answer', %q(
   given(:user) { create(:user) }
   given(:user_not_author) { create(:user) }
 
-  given(:question) { create(:question) }
+  given(:question) { create(:question, author: user) }
 
   given!(:answer) { create(:answer, question: question, author: user) }
 
@@ -17,7 +17,7 @@ feature 'The author can delete his answer', %q(
       sign_in(user)
       visit new_question_answer_path(question)
 
-      find('.remove_question_btn').click
+      find('.remove_answer_btn').click
       expect(page).to have_content('Answer has been removed successfully.')
     end
 
@@ -25,13 +25,13 @@ feature 'The author can delete his answer', %q(
       sign_in(user_not_author)
       visit new_question_answer_path(question)
 
-      expect(page).to_not have_selector('.remove_question_btn')
+      expect(page).to_not have_selector('.remove_answer_btn')
     end
   end
 
   scenario "Unuthenticated answer author can't delete an answer" do
     visit new_question_answer_path(question)
 
-    expect(page).to_not have_selector('.remove_question_btn')
+    expect(page).to_not have_selector('.remove_answer_btn')
   end
 end
