@@ -1,4 +1,4 @@
-nav.navbar.bg-light
+nav.navbar.header.bg-light
   div.container
     - if current_user
       = button_to "Sign out", destroy_user_session_path, method: "delete", id: 'sign_out', class: 'btn btn-outline-primary'
