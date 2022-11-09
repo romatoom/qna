@@ -15,7 +15,7 @@ feature 'The author can delete his answer', %q(
   describe 'Authenticated user' do
     scenario 'answer author can delete an answer' do
       sign_in(user)
-      visit question_path(question)
+      visit new_question_answer_path(question)
 
       find('.remove_question_btn').click
       expect(page).to have_content('Answer has been removed successfully.')
@@ -23,14 +23,14 @@ feature 'The author can delete his answer', %q(
 
     scenario "non-authored user can't delete the answer" do
       sign_in(user_not_author)
-      visit question_path(question)
+      visit new_question_answer_path(question)
 
       expect(page).to_not have_selector('.remove_question_btn')
     end
   end
 
   scenario "Unuthenticated answer author can't delete an answer" do
-    visit question_path(question)
+    visit new_question_answer_path(question)
 
     expect(page).to_not have_selector('.remove_question_btn')
   end

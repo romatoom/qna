@@ -2,25 +2,26 @@ h1 Question
 
 div.mb-3
   div.fw-bold Title
-  = question.title
+  = @question.title
 
 div.mb-3
   div.fw-bold Body
-  = question.body.html_safe
+  = @question.body.html_safe
 
 div.mb-3
   div.fw-bold Answers
-  - if question.answers.count.positive?
+  - if @question.answers.count.positive?
     ul.mb-3
-      - question.answers.each do |answer|
-        - if answer.valid?
+      - @question.answers.each do |answer|
+        - if answer.persisted?
           li #{answer.body.html_safe}
           - if answer.author == current_user
-            = button_to 'Remove', question_answer_path(question, answer), method: :delete, class: 'btn btn-danger remove_question_btn'
+            = button_to 'Remove', question_answer_path(@question, answer), method: :delete, class: 'btn btn-danger remove_question_btn'
   - else
     div.mb-3 No answers
 
-  = form_with model: [question, @answer], local: true do |f|
+  = form_with model: [@question, @answer], local: true, data: { turbo: false } do |f|
+    = render 'shared/errors', resource: @answer
     div.mb-2
       = f.label :body, 'You can answer the question here', class: 'form-label'
       = f.text_area :body, id: :answer_body, rows: 10, class: 'form-control'

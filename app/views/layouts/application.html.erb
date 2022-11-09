@@ -11,16 +11,9 @@
   </head>
 
   <body>
+    <%= flash_block %>
     <%= render 'shared/header' %>
     <div class="container mb-3 mt-3">
-      <% if notice.present? %>
-        <p class="alert alert-secondary"><%= notice %></p>
-      <% end %>
-
-      <% if alert.present? %>
-        <p class="alert alert-primary"><%= alert %></p>
-      <% end %>
-
       <%= yield %>
     </div>
   </body>

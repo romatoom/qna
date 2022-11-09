@@ -57,7 +57,7 @@ RSpec.describe AnswersController, type: :controller do
 
         it 'redirects to question page' do
           create_with_valid_attributes.call
-          expect(response).to redirect_to question_path(question)
+          expect(response).to redirect_to new_question_answer_path(question)
         end
       end
 
@@ -68,7 +68,7 @@ RSpec.describe AnswersController, type: :controller do
 
         it 're-renders new view' do
           create_with_invalid_attributes.call
-          expect(response).to redirect_to question_path(question)
+          expect(response).to render_template :new
         end
       end
     end
@@ -107,7 +107,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirect to question show' do
         delete_answer.call
-        expect(response).to redirect_to question_path(question)
+        expect(response).to redirect_to new_question_answer_path(question)
       end
     end
 

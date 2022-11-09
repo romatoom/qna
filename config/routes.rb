@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :questions, only: %i[new create show index] do
-    resources :answers, only: %i[create show destroy]
+  resources :questions, only: %i[new create index] do
+    resources :answers, only: %i[new create show destroy]
   end
 end
