@@ -6,4 +6,7 @@ class User < ApplicationRecord
 
   has_many :users_answers, dependent: :destroy
   has_many :answers, through: :users_answers
+
+  has_many :users_questions, dependent: :destroy
+  has_many :questions, through: :users_questions
 end

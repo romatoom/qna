@@ -24,12 +24,14 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
+    let!(:user) { create(:user) }
+
     let(:create_with_valid_attributes) do
-      -> { post :create, params: { question: attributes_for(:question) } }
+      -> { post :create, params: { question: attributes_for(:question, author: user) } }
     end
 
     let(:create_with_invalid_attributes) do
-      -> { post :create, params: { question: attributes_for(:question, :invalid) } }
+      -> { post :create, params: { question: attributes_for(:question, :invalid, author: user) } }
     end
 
     context 'with authenticated user' do
@@ -83,7 +85,7 @@ RSpec.describe QuestionsController, type: :controller do
 =end
 
   describe 'GET #index' do
-    let(:questions) { create_list(:question, 3) }
+    let(:questions) { create_list(:question, 3, author: user) }
 
     before { get :index }
 
@@ -93,6 +95,32 @@ RSpec.describe QuestionsController, type: :controller do
 
     it 'render index view' do
       expect(response).to render_template :index
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    before { create_list(:question, 3, author: user) }
+    let!(:question) { create(:question, author: user) }
+
+    let(:delete_question) do
+      lambda { delete :destroy, params: { id: question.id } }
+    end
+
+    context 'with authenticated user' do
+      before { login(user) }
+
+      it 'number of questions decreased by 1' do
+        expect { delete_question.call }.to change(Question, :count).by(-1)
+      end
+
+      it 'redirect to questions show' do
+        delete_question.call
+        expect(response).to redirect_to questions_path
+      end
+    end
+
+    it 'with unauthenticated user' do
+      expect { delete_question.call }.to_not change(Question, :count)
     end
   end
 end

@@ -16,7 +16,7 @@ div.mb-3
         - if answer.persisted?
           li #{answer.body.html_safe}
           - if answer.author == current_user
-            = button_to 'Remove', question_answer_path(@question, answer), method: :delete, class: 'btn btn-danger remove_question_btn'
+            = button_to 'Remove', question_answer_path(@question, answer), method: :delete, class: 'btn btn-danger remove_answer_btn'
   - else
     div.mb-3 No answers
 

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:question) { create(:question) }
-
   let(:user) { create(:user) }
+
+  let(:question) { create(:question, author: user) }
 
   let(:answer) { create(:answer, question: question, author: user) }
 
@@ -34,6 +34,7 @@ RSpec.describe AnswersController, type: :controller do
       lambda do
         post :create, params: {
           question_id: question,
+          author_id: user.id,
           answer: attributes_for(:answer, question_id: question, author_id: user) }
         end
     end
@@ -42,6 +43,7 @@ RSpec.describe AnswersController, type: :controller do
       lambda do
         post :create, params: {
           question_id: question,
+          author_id: user.id,
           answer: attributes_for(:answer, :invalid, question_id: question, author_id: user)
         }
       end
@@ -101,7 +103,7 @@ RSpec.describe AnswersController, type: :controller do
     context 'with authenticated user' do
       before { login(user) }
 
-      it 'number of responses decreased by 1' do
+      it 'number of answers decreased by 1' do
         expect { delete_answer.call }.to change(Answer, :count).by(-1)
       end
 

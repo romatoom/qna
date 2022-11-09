@@ -10,6 +10,7 @@ FactoryBot.define do
   factory :question do
     title
     body
+    author { nil }
 
     trait :invalid do
       title { nil }
