@@ -5,7 +5,6 @@ class AnswersController < ApplicationController
 
   def new
     @answer = @question.answers.new
-    @answer.errors
   end
 
   def show; end
