@@ -45,29 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_09_120655) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "users_answers", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "answer_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["answer_id"], name: "index_users_answers_on_answer_id"
-    t.index ["user_id"], name: "index_users_answers_on_user_id"
-  end
-
-  create_table "users_questions", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "question_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["question_id"], name: "index_users_questions_on_question_id"
-    t.index ["user_id"], name: "index_users_questions_on_user_id"
-  end
-
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users", column: "author_id"
   add_foreign_key "questions", "users", column: "author_id"
-  add_foreign_key "users_answers", "answers"
-  add_foreign_key "users_answers", "users"
-  add_foreign_key "users_questions", "questions"
-  add_foreign_key "users_questions", "users"
 end
