@@ -9,18 +9,27 @@ feature 'User can write an answer', %q(
   given(:user) { create(:user) }
   given(:question) { create(:question, author: user) }
 
-  scenario 'Authenticate user can write an answer' do
-    sign_in(user)
+  describe 'Authenticated user' do
+    background do
+      sign_in(user)
+      visit question_path(question)
+    end
 
-    visit question_path(question)
+    scenario 'can write an answer', js: true do
+      fill_in 'You can answer the question here', with: 'Text text text'
+      click_on 'Answer'
 
-    fill_in 'You can answer the question here', with: 'Text text text'
-    click_on 'Answer'
+      expect(current_path).to eq question_path(question)
 
-    expect(current_path).to eq question_path(question)
+      within '.answers' do
+        expect(page).to have_content 'Text text text'
+      end
+    end
 
-    within '.answers' do
-      expect(page).to have_content 'Text text text'
+    scenario 'create answer with error', js: true do
+      click_on 'Answer'
+
+      expect(page).to have_content "Body can't be blank"
     end
   end
 
