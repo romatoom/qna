@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :set_question, only: %i[destroy]
+  before_action :set_question, only: %i[show destroy]
 
   def index
     @questions = Question.all
@@ -10,12 +10,16 @@ class QuestionsController < ApplicationController
     @question = Question.new
   end
 
+  def show
+    @answer = Answer.new
+  end
+
   def create
     @question = Question.new(question_params)
     @question.author = current_user
 
     if @question.save
-      redirect_to new_question_answer_path(@question), notice: 'Your question successfully created.'
+      redirect_to question_path(@question), success: 'Your question successfully created.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -23,7 +27,7 @@ class QuestionsController < ApplicationController
 
   def destroy
     @question.destroy
-    redirect_to questions_path, notice: 'Question has been removed successfully.'
+    redirect_to questions_path, success: 'Question has been removed successfully.'
   end
 
   private
