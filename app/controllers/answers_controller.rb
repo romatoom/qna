@@ -3,10 +3,6 @@ class AnswersController < ApplicationController
   before_action :set_question
   before_action :set_answer, only: %i[show destroy]
 
-  def new
-    @answer = @question.answers.new
-  end
-
   def show; end
 
   def create
@@ -14,15 +10,15 @@ class AnswersController < ApplicationController
     @answer.author = current_user
 
     if @answer.save
-      redirect_to new_question_answer_path(@question), notice: 'Answer has been created successfully.'
+      redirect_to question_path(@question), success: 'Answer has been created successfully.'
     else
-      render :new, status: :unprocessable_entity
+      render 'questions/show', status: :unprocessable_entity
     end
   end
 
   def destroy
     @answer.destroy
-    redirect_to new_question_answer_path(@question), notice: 'Answer has been removed successfully.'
+    redirect_to question_path(@question), success: 'Answer has been removed successfully.'
   end
 
   private

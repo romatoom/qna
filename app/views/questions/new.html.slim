@@ -1,6 +1,6 @@
 h1 Create question
 
-= form_with model: @question, local: true, data: { turbo: false } do |f|
+= form_with model: @question, local: true do |f|
   = render 'shared/errors', resource: @question
 
   div.mb-3

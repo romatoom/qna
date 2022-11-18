@@ -1,7 +1,9 @@
 module ApplicationHelper
   ALERT_TYPES = {
     notice: 'secondary',
-    alert: 'danger'
+    alert: 'danger',
+    success: 'success',
+    warning: 'warning'
   }.freeze
 
   def flash_block

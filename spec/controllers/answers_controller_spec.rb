@@ -7,18 +7,6 @@ RSpec.describe AnswersController, type: :controller do
 
   let(:answer) { create(:answer) }
 
-  describe 'GET #new' do
-    before { get :new, params: { question_id: question.id, author_id: user.id } }
-
-    it 'assigns a new Answer to @answer' do
-      expect(assigns(:answer)).to be_a_new(Answer)
-    end
-
-    it 'renders new view' do
-      expect(response).to render_template :new
-    end
-  end
-
   describe 'POST #create' do
     subject(:create_with_valid_attributes) do
       post :create, params: {
@@ -44,9 +32,9 @@ RSpec.describe AnswersController, type: :controller do
           expect { create_with_valid_attributes }.to change(Answer, :count).by(1)
         end
 
-        it 'redirects to question page' do
+        it 'redirects to question show' do
           create_with_valid_attributes
-          expect(response).to redirect_to new_question_answer_path(question)
+          expect(response).to redirect_to question_path(question)
         end
       end
 
@@ -57,7 +45,7 @@ RSpec.describe AnswersController, type: :controller do
 
         it 're-renders new view' do
           create_with_invalid_attributes
-          expect(response).to render_template :new
+          expect(response).to render_template 'questions/show'
         end
       end
     end
@@ -96,7 +84,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirect to question show' do
         delete_answer
-        expect(response).to redirect_to new_question_answer_path(question)
+        expect(response).to redirect_to question_path(question)
       end
     end
 
