@@ -10,9 +10,7 @@ class AnswersController < ApplicationController
     @answer.author = current_user
 
     if @answer.save
-      redirect_to question_path(@question), success: 'Answer has been created successfully.'
-    else
-      render 'questions/show', status: :unprocessable_entity
+      redirect_to @question, success: 'Answer has been created successfully.'
     end
   end
 

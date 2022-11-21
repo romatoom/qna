@@ -22,8 +22,10 @@ div.mb-3
   - else
     div.mb-3 No answers
 
-  = form_with model: [@question, @answer], local: true do |f|
+  div.answer-errors
     = render 'shared/errors', resource: @answer
+
+  = form_with model: [@question, @answer], local: false do |f|
     div.mb-2
       = f.label :body, 'You can answer the question here', class: 'form-label'
       = f.text_area :body, id: :answer_body, rows: 10, class: 'form-control'
